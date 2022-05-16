@@ -21,10 +21,10 @@ Finally, [Fontcustom](https://github.com/FontCustom/fontcustom) is used to gener
 ## Use
 Help message :
 ```shell
-docker run --rm -v WORK_DIRECTORY:/fonts rfbezerra/svg-to-ttf -h
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -h
 ```
 ```
-Usage: docker run --rm -v "${PWD}":/fonts rfbezerra/svg-to-ttf [OPTIONS]
+Usage: docker run --rm -v "${PWD}":/fonts lu0alv/svg-to-ttf-charmap [OPTIONS]
   -g, --gid [GID]               GroupId owner of the destination folder; default is equal to uid
   -i, --input [FOLDER]          Folder where svg glyphs lives; default is ./input
   -n, --name FONT_NAME          Name of the generated font
@@ -37,24 +37,29 @@ Usage: docker run --rm -v "${PWD}":/fonts rfbezerra/svg-to-ttf [OPTIONS]
 
 Simple font generation:
 ```shell
-docker run --rm -v WORK_DIRECTORY:/fonts rfbezerra/svg-to-ttf -n FONT_NAME
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -n FONT_NAME
 ```
 This command will read all svg glyphs from WORK_DIRECTORY/input and create a folder named FONT_NAME with generated TTF font into.
 
 If you want to define another output folder:
 ```shell
-docker run --rm -v WORK_DIRECTORY:/fonts rfbezerra/svg-to-ttf -n FONT_NAME -o OUTPUT_FOLDER
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -n FONT_NAME -o OUTPUT_FOLDER
 ```
 
 If you want that the result of build respect your user:
 ```shell
-docker run --rm -v WORK_DIRECTORY:/fonts rfbezerra/svg-to-ttf -n FONT_NAME -u $(id -u)
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -n FONT_NAME -u $(id -u)
 ```
 (GID is optional)
 
 If you dont need to convert stroke to path:
 ```shell
-docker run --rm -v WORK_DIRECTORY:/fonts rfbezerra/svg-to-ttf -n FONT_NAME -s
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -n FONT_NAME -s
+```
+
+If you want to specify the starting point of the character map:
+```shell
+docker run --rm -v WORK_DIRECTORY:/fonts lu0alv/svg-to-ttf-charmap -n FONT_NAME -c e916
 ```
 
 
@@ -73,3 +78,9 @@ Contributions are what make the open source community such an amazing place to b
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=6ZPRN6FTR8SKA&currency_code=USD&source=url)
 
 If you want to buy me a :beer: :)
+
+## Fork notes:
+This is a fork of
+[rfbezerra's `svg-to-ttf` repo](https://github.com/rfbezerra/svg-to-ttf)
+I modified to have the ability to specify the starting point of the charmap
+using a new option `-c` or `--codepoint`.

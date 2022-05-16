@@ -1,22 +1,9 @@
-FROM rfbezerra/fontcustom:latest
+# Overriden while PR is accepted
+FROM rfbezerra/svg-to-ttf@sha256:ccb947c207fcc3574e22caecd96a4a021d7985208b06af692ebe7f912995dc05
 
-LABEL maintainer="rfbezerra@gmail.com"
-
-RUN apk add nodejs yarn parallel inkscape xvfb woff2 curl gcc libc-dev zlib-dev make && \
-    apk add fontforge --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted && \
-    curl -o code.zip -Ls http://pkgs.fedoraproject.org/repo/pkgs/woff/woff-code-latest.zip/1dcdbc9a7f48086185740c185d822279/woff-code-latest.zip && \
-    mkdir -p sfnt2woff && \
-    unzip -d sfnt2woff code.zip && rm code.zip && \
-    make -C sfnt2woff && \
-    mv sfnt2woff/sfnt2woff /usr/local/bin/ && \
-    rm -rf sfnt2woff && \
-    apk del gcc libc-dev zlib-dev make && \
-    rm -rf /var/cache/apk/*
-
+LABEL maintainer="me@lucerocodes.com"
 COPY convert-icons.sh /usr/local/bin
-
 WORKDIR /fonts
-
 VOLUME /fonts
 
 ENTRYPOINT ["/usr/local/bin/convert-icons.sh"]
